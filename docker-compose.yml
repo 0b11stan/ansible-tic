@@ -2,26 +2,37 @@ version: '3.7'
 
 volumes:
   nextcloud:
-  db:
+  database:
 
 services:
-  nextcloud:
+  proxy:
+    restart: always
+    image: nginx
     ports:
-      - 8080:80
+      - 80:80
+    links:
+      - nextcloud
+    depends_on:
+      - nextcloud
+    volumes:
+      - ./proxy/:/etc/nginx/conf.d/:ro
+  nextcloud:
+    restart: always
     image: nextcloud
     links:
-      - db
+      - database
+    depends_on:
+      - database
     volumes:
       - nextcloud:/var/www/html
+  database:
     restart: always
-  db:
     image: mariadb
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
-    restart: always
     volumes:
-      - db:/var/lib/mysql
+      - database:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=azerty
-      - MYSQL_PASSWORD=qwerty
+      - MYSQL_PASSWORD=azerty
       - MYSQL_DATABASE=nextcloud
       - MYSQL_USER=nextcloud
