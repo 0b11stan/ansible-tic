@@ -1,6 +1,5 @@
 # ansible-tic
 
-
 ## Description
 
 I use ansible to deploy docker on a centos box.
@@ -16,8 +15,6 @@ Architecture:
                      +---| nextcloud |---| database |
                          +-----------+   +----------+
 ```
-
-
 
 ## Usage
 
