@@ -8,20 +8,16 @@ Then, I use docker via ansible to deploy every other services
 
 Architecture:
 ```
-      +---------------+
-      | reverse proxy |
-      +---------------+
-              |
-      +----------------+
-      |                |
-+-----------+    +----------+
-| nextcloud |    | web site |
-+-----------+    +----------+
-      |
- +----------+
- | database |
- +----------+
+                         +----------+
+                     +---| web site |
+ +---------------+   |   +----------+
+ | reverse proxy |---+
+ +---------------+   |   +-----------+   +----------+
+                     +---| nextcloud |---| database |
+                         +-----------+   +----------+
 ```
+
+
 
 ## Usage
 
