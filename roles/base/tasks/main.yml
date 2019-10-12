@@ -2,7 +2,9 @@
   become: true
   package:
     state: present
-    name: sudo
+    name:
+      - sudo
+      - epel-release
 
 - name: user tristan exists
   become: true

@@ -1,5 +1,5 @@
 CMD=ansible-playbook -i inventory.ini tic.yml
-ACTIVATE=source venv/bin/activate
+ACTIVATE=source ./venv/bin/activate
 
 check: prepare validation       ## Play the recipe without modifiations
 	$(ACTIVATE) && $(CMD) --check --diff

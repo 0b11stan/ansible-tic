@@ -1,0 +1,42 @@
+- name: required packages are installed
+  become: true
+  package:
+    state: present
+    name:
+      - git
+      - python-pip
+
+- name: install required pip packages
+  pip:
+    name:
+      - docker-py
+      - docker-compose
+
+- name: pull tic docker
+  become: true
+  git:
+    repo: https://github.com/0b11stan/docker-tic.git
+    dest: /srv/docker-tic/
+
+- name: build reverse-proxy
+  become: true
+  docker_image:
+    name: proxy
+    source: build
+    build:
+      path: /srv/docker-tic/proxy
+      pull: true
+
+- name: build flexfactory
+  become: true
+  docker_image:
+    name: flexfactory
+    source: build
+    build:
+      path: /srv/docker-tic/flexfactory
+      pull: true
+
+- name: deploy apps
+  become: true
+  docker_compose:
+    project_src: /srv/docker-tic/
