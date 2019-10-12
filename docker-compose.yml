@@ -7,15 +7,17 @@ volumes:
 services:
   proxy:
     restart: always
-    image: nginx
+    build: ./proxy
     ports:
       - 80:80
     links:
       - nextcloud
     depends_on:
       - nextcloud
-    volumes:
-      - ./proxy/:/etc/nginx/conf.d/:ro
+      - flexfactory
+  flexfactory:
+    restart: always
+    image: nginx
   nextcloud:
     restart: always
     image: nextcloud
