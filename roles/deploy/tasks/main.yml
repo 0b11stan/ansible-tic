@@ -6,10 +6,11 @@
       - git
       - python-pip
 
-- name: install required pip packages
+- name: required pip packages are installed
+  become: true
   pip:
     name:
-      - docker-py
+      - docker<4.0
       - docker-compose
 
 - name: pull tic docker
