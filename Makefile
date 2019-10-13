@@ -7,7 +7,7 @@ check: validation       ## Play the recipe without modifiations
 apply: validation       ## Play the recipe with modifications
 	$(CMD)
 
-validation:
+validation: inventory.ini tic.yml
 ifndef DATABASE_ROOT_PASSWORD
 	$(error DATABASE_ROOT_PASSWORD is undefined)
 endif
