@@ -18,8 +18,6 @@ Architecture:
 
 ## Usage
 
-First, export the following environnement variables:
-* `DATABASE_ROOT_PASSWORD`
-* `DATABASE_PASSWORD`
+First, edit the `inventory.ini` file as described in `inventory.ini.dist`.
 
 Then, see `make help`.
