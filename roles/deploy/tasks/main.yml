@@ -23,3 +23,6 @@
   become: true
   docker_compose:
     project_src: /srv/docker-tic/
+  environment:
+    DATABASE_ROOT_PASSWORD: "{{ db_root_password }}"
+    DATABASE_PASSWORD: "{{ db_password }}"

@@ -1,5 +1,5 @@
 CMD=ansible-playbook -i inventory.ini tic.yml
-ACTIVATE=source ./venv/bin/activate
+ACTIVATE=source ./venv/bin/activate -e "db_root_password=$(DATABASE_ROOT_PASSWORD)" -e "db_password=$(DATABASE_PASSWORD)"
 
 check: validation       ## Play the recipe without modifiations
 	$(CMD) --check --diff
