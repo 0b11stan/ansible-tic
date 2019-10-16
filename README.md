@@ -21,3 +21,9 @@ Architecture:
 First, edit the `inventory.ini` file as described in `inventory.ini.dist`.
 
 Then, see `make help`.
+
+## Roadmap
+
+[ ] The first time, run certbot to issue an ssl certificate
+[ ] Generate a Diffie–Hellman key exchange file
+[ ] Set up a cron job for certbot renewal
