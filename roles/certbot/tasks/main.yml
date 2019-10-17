@@ -1,0 +1,53 @@
+- name: list started containers
+  command: docker ps -q
+  register: started_docker_ctrs
+  check_mode: false
+
+- name: every other containers are stopped
+  command: "docker stop {{ started_docker_ctrs.stdout }}"
+  when: started_docker_ctrs.stdout is not ""
+
+- name: stat certificates
+  stat:
+    path: "{{ letsencrypt_volumes_path }}/live"
+  register: certificates
+
+- name: an http server has been started for temporary http response
+  docker_container:
+    name: letsencrypt_tmp_site
+    image: nginx
+    auto_remove: true
+  when: not certificates.stat.exists
+  register: letsencrypt_tmp_site
+
+- name: a letsencrypt certificate has be delivered
+  docker_container:
+    name: certbot
+    image: certbot/certbot
+    auto_remove: true
+    volumes:
+      - letsencrypt-config:/etc/letsencrypt
+      - letsencrypt-var:/var/lib/letsencrypt
+      - letsencrypt-data:/data/letsencrypt
+      - letsencrypt-log:/var/log/letsencrypt
+    command: certonly \
+      --webroot \
+      --email tristan@tic.sh
+      --agree-tos \
+      --no-eff-email \
+      --webroot-path=/data/letsencrypt
+      -d flexfactory.fr
+      -d www.flexfactory.fr
+      -d tic.sh
+      -d www.tic.sh
+  when: letsencrypt_tmp_site.changed
+
+- name: temporary http server has been stopped
+  docker_container:
+    name: letsencrypt_tmp_site
+    state: stopped
+
+- name: Générate openssl certificate
+  openssl_dhparam:
+    path: /var/lib/docker/volumes/dhparam/dhparam-2048.pem
+    size: 2048
