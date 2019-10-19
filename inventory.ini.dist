@@ -1,0 +1,9 @@
+[main]
+<ip address>
+
+[main:vars]
+ansible_ssh_user=<username>
+ansible_ssh_pass=<ssh password>
+ansible_sudo_pass=<sudo password>
+db_root_password=<mysql root password>
+db_password=<nextcloud database password>
