@@ -22,6 +22,8 @@
 - name: deploy apps
   become: true
   docker_compose:
+    build: true
+    project_name: tic
     project_src: /srv/docker-tic/
   environment:
     DATABASE_ROOT_PASSWORD: "{{ db_root_password }}"

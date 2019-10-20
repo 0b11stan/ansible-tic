@@ -3,4 +3,4 @@
     - base
     - docker
     - certbot
-#    - deploy
+    - deploy

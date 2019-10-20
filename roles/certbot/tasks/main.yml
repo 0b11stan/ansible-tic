@@ -12,6 +12,12 @@
     - letsencrypt-log
     - letsencrypt-dh
 
+- name: stat certificates
+  become: true
+  stat:
+    path: "{{ docker_volumes_path }}/letsencrypt-config/_data/live"
+  register: certificates
+
 - name: list started containers
   become: true
   command: docker ps -q
@@ -22,13 +28,7 @@
 - name: every other containers are stopped
   become: true
   command: "docker stop {{ started_docker_ctrs.stdout }}"
-  when: started_docker_ctrs.stdout != ""
-
-- name: stat certificates
-  become: true
-  stat:
-    path: "{{ docker_volumes_path }}/letsencrypt-config/_data/live"
-  register: certificates
+  when: started_docker_ctrs.stdout != "" and certificates.stat.exists
 
 - name: nginx conf exists on remote host
   become: true
@@ -95,7 +95,7 @@
     name: letsencrypt-tmp-website
     state: stopped
 
-- name: générate openssl certificate
+- name: generate openssl certificate
   become: true
   openssl_dhparam:
     path: "{{ docker_volumes_path }}/letsencrypt-dh/_data/dhparam-2048.pem"
