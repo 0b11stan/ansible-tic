@@ -7,7 +7,6 @@
     - letsencrypt-config
     - letsencrypt-var
     - letsencrypt-data
-    - letsencrypt-log
     - letsencrypt-dh
 
 - name: stat certificates
@@ -70,7 +69,6 @@
       - letsencrypt-config:/etc/letsencrypt
       - letsencrypt-var:/var/lib/letsencrypt
       - letsencrypt-data:/data/letsencrypt
-      - letsencrypt-log:/var/log/letsencrypt
     command:
       - certonly 
       - --webroot
@@ -95,7 +93,6 @@
       - letsencrypt-config:/etc/letsencrypt
       - letsencrypt-var:/var/lib/letsencrypt
       - letsencrypt-data:/data/letsencrypt
-      - letsencrypt-log:/var/log/letsencrypt
     command:
       - certonly 
       - --webroot
