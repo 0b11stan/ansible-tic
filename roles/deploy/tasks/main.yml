@@ -1,3 +1,12 @@
+- name: create required docker volumes
+  become: true
+  command: "docker volume create {{ item }}"
+  args:
+    creates: "{{ docker_volumes_path }}/{{ item }}"
+  loop:
+    - nextcloud
+    - database
+
 - name: required packages are installed
   become: true
   package:

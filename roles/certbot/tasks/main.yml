@@ -4,8 +4,6 @@
   args:
     creates: "{{ docker_volumes_path }}/{{ item }}"
   loop:
-    - nextcloud
-    - database
     - letsencrypt-config
     - letsencrypt-var
     - letsencrypt-data
