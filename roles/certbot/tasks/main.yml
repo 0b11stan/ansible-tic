@@ -28,7 +28,7 @@
 - name: every other containers are stopped
   become: true
   command: "docker stop {{ started_docker_ctrs.stdout }}"
-  when: started_docker_ctrs.stdout != "" and certificates.stat.exists
+  when: started_docker_ctrs.stdout != "" and not certificates.stat.exists
 
 - name: nginx conf exists on remote host
   become: true
@@ -85,6 +85,27 @@
       - flexfactory.fr
       - -d
       - www.flexfactory.fr
+  when: not certificates.stat.exists
+
+- name: a letsencrypt certificate has been delivered
+  become: true
+  docker_container:
+    name: certbot
+    image: certbot/certbot
+    auto_remove: true
+    volumes:
+      - letsencrypt-config:/etc/letsencrypt
+      - letsencrypt-var:/var/lib/letsencrypt
+      - letsencrypt-data:/data/letsencrypt
+      - letsencrypt-log:/var/log/letsencrypt
+    command:
+      - certonly 
+      - --webroot
+      - --email
+      - tristan@tic.sh
+      - --agree-tos
+      - --no-eff-email
+      - --webroot-path=/data/letsencrypt
       - -d
       - cloud.tic.sh
   when: not certificates.stat.exists
