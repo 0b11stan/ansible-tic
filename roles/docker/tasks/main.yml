@@ -45,3 +45,17 @@
     name: docker
     enabled: true
     state: started
+
+- name: required packages are installed
+  become: true
+  package:
+    state: present
+    name:
+      - python-pip
+
+- name: required pip packages are installed
+  become: true
+  pip:
+    name:
+      - docker<4.0
+      - docker-compose

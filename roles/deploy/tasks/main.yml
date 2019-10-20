@@ -13,14 +13,6 @@
     state: present
     name:
       - git
-      - python-pip
-
-- name: required pip packages are installed
-  become: true
-  pip:
-    name:
-      - docker<4.0
-      - docker-compose
 
 - name: pull tic docker
   become: true
