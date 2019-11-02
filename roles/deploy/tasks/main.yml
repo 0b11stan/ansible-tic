@@ -23,6 +23,7 @@
 - name: deploy apps
   become: true
   docker_compose:
+    restarted: "{{ update }}"
     build: true
     project_name: tic
     project_src: /srv/docker-tic/
