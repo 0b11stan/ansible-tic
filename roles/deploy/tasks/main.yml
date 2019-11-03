@@ -23,10 +23,16 @@
 - name: deploy apps
   become: true
   docker_compose:
-    restarted: "{{ update }}"
     build: true
     project_name: tic
     project_src: /srv/docker-tic/
   environment:
     DATABASE_ROOT_PASSWORD: "{{ db_root_password }}"
     DATABASE_PASSWORD: "{{ db_password }}"
+    ADMIN_USERNAME: "{{ admin_username }}"
+    ADMIN_PASSWORD: "{{ admin_password }}"
+
+# TODO : auto-configure nextcloud overwrite config !
+#   'overwritehost' => 'cloud.tic.sh',
+#   'overwriteprotocol' => 'https',
+#   'overwrite.cli.url' => 'https://cloud.tic.sh/',

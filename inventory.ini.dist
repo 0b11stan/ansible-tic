@@ -7,3 +7,5 @@ ansible_ssh_pass=<ssh password>
 ansible_sudo_pass=<sudo password>
 db_root_password=<mysql root password>
 db_password=<nextcloud database password>
+admin_username=<nextcloud admin username>
+admin_password=<nextcloud admin password>
