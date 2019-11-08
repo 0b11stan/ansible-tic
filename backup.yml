@@ -1,0 +1,52 @@
+---
+- hosts: main
+  tasks:
+    - name: put nextcloud in maintenance mode
+      become: true
+      command: "docker-compose -p {{ docker_project_name }} exec nextcloud su -s /bin/bash www-data -c 'php occ maintenance:mode --on'"
+      args:
+        chdir: "{{ docker_compose_dir }}"
+
+    - name: create export directory
+      file:
+        state: directory
+        path: "/home/{{ ansible_ssh_user }}/nextcloud/{{ item }}"
+      loop: [data, db]
+
+    - name: files are extracted
+      become: true
+      copy:
+        remote_src: true
+        src: /var/lib/docker/volumes/nextcloud/_data/
+        dest: "/home/{{ ansible_ssh_user }}/nextcloud/data/"
+        group: tristan
+
+    - name: database is extracted
+      become: true
+      command: "docker-compose -p tic exec database mysqldump --single-transaction -u nextcloud -p{{ db_password }} nextcloud"
+      args:
+        chdir: "{{ docker_compose_dir }}"
+      register: dump
+
+    - name: sql dump to file
+      copy:
+        content: "{{ dump.stdout }}"
+        dest: "/home/{{ ansible_ssh_user }}/nextcloud/db/nextcloud.sql"
+
+    - name: download nextcloud backup
+      synchronize:
+        mode: pull
+        src: "/home/{{ ansible_ssh_user }}/nextcloud/"
+        dest: "{{ backup_dir }}"
+
+    - name: nextcloud copy dir is removed
+      become: true
+      file:
+        path: "/home/{{ ansible_ssh_user }}/nextcloud/"
+        state: absent
+
+    - name: put nextcloud out off maintenance mode
+      become: true
+      command: "docker-compose -p {{ docker_project_name }} exec nextcloud su -s /bin/bash www-data -c 'php occ maintenance:mode --off'"
+      args:
+        chdir: "{{ docker_compose_dir }}"
