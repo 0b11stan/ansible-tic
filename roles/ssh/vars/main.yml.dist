@@ -1,7 +1,0 @@
-ssh_group: ssh_admin
-ssh_port: 22
-ssh_users:
-  - <list>
-  - <of>
-  - <ssh>
-  - <users>
