@@ -5,6 +5,7 @@
 # required vars
 ansible_ssh_user=<username>
 ansible_become_password=<sudo password>
+ansible_port=<ssh server port>
 db_root_password=<mysql root password>
 db_password=<nextcloud database password>
 admin_username=<nextcloud admin username>

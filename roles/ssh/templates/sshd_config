@@ -1,0 +1,15 @@
+Port {{ ssh_port }}
+AllowGroups {{ ssh_group }}
+ChallengeResponseAuthentication no
+PasswordAuthentication no
+PermitEmptyPasswords no
+X11Forwarding no
+PermitRootLogin no
+UsePAM yes
+PubkeyAuthentication yes
+AcceptEnv LANG LC_*
+Subsystem sftp /usr/libexec/openssh/sftp-server
+AuthorizedKeysFile .ssh/authorized_keys
+MaxAuthTries 3
+MaxSessions 2
+LoginGraceTime 1m

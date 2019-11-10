@@ -1,0 +1,37 @@
+- name: "{{ ssh_group }} group exists"
+  become: true
+  group:
+    name: "{{ ssh_group }}"
+    state: present
+
+- name: "{{ item }} is allowed ssh access"
+  become: true
+  user:
+    name: "{{ item }}"
+    groups: "{{ ssh_group }}"
+  loop: "{{ ssh_users }}"
+
+- name: sshd config file is copied
+  become: true
+  template:
+    src: sshd_config
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: 600
+  register: sshd_config
+
+- name: ssh server is reloaded
+  become: true
+  service:
+    name: sshd
+    state: reloaded
+  ignore_errors: true
+  when: sshd_config.changed
+
+- name: ansible ssh port is changed
+  set_fact:
+    ansible_port: "{{ ssh_port }}"
+  when: sshd_config.changed
+
+# TODO: add iptable rule to allow "ssh_port"
