@@ -4,5 +4,6 @@
     - base
     - docker
     - certbot
-    - deploy
     - ssh
+    - deploy
+...
