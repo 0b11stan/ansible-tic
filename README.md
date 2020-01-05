@@ -26,4 +26,4 @@ Then, see `make help`.
 
 [x] The first time, run certbot to issue an ssl certificate
 [x] Generate a Diffie–Hellman key exchange file
-[ ] Set up a cron job for certbot renewal
+[x] Set up a cron job for certbot renewal
