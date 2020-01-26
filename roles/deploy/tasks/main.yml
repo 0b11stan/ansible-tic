@@ -52,7 +52,6 @@
     DATABASE_PASSWORD: "{{ db_password }}"
     ADMIN_USERNAME: "{{ admin_username }}"
     ADMIN_PASSWORD: "{{ admin_password }}"
-  when: flexfactory.changed
 
 # TODO : auto-configure nextcloud overwrite config !
 #   'overwritehost' => 'cloud.tic.sh',

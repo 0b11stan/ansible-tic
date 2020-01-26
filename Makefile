@@ -1,5 +1,8 @@
 CMD=ansible-playbook -i inventory.ini
 
+first_apply:        ## Play the recipe for the first time
+	$(CMD) tic.yml -k
+
 check:       ## Play the recipe without modifiations
 	$(CMD) tic.yml --check --diff
 
