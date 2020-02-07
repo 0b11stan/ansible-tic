@@ -18,7 +18,10 @@ Architecture:
 
 ## Usage
 
-First, edit the `inventory.ini` file as described in `inventory.ini.dist`.
+First, edit the inventory file as described in `inventory.ini.dist`.
+```
+$ mv inventory.ini.dist production.ini
+```
 
 Then, see `make help`.
 

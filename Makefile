@@ -1,4 +1,6 @@
-CMD=ansible-playbook -i inventory.ini
+INVENTORY=production
+
+CMD=ansible-playbook -i $(INVENTORY).ini
 
 first_apply:        ## Play the recipe for the first time
 	$(CMD) tic.yml -k
