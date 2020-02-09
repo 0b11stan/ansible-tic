@@ -1,9 +1,14 @@
 ---
 - hosts: main
   roles:
-    - base
-    - docker
-    - certbot
-    - ssh
-    - deploy
+    - role: base
+      tags: common
+    - role: docker
+      tags: common
+    - role: certbot
+      tags: common
+    - role: deploy
+      tags: common
+    - role: ssh
+      tags: ssh
 ...

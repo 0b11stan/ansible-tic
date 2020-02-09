@@ -23,7 +23,10 @@ First, edit the inventory file as described in `inventory.ini.dist`.
 $ mv inventory.ini.dist production.ini
 ```
 
-Then, see `make help`.
+Then, play `make ssh` if it's the first time you are playing this recipe.
+It will configure ssh with public/private keys for your current user.
+
+See `make help` for more usage.
 
 ## Roadmap
 

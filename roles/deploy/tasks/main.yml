@@ -31,7 +31,7 @@
     ADMIN_USERNAME: "{{ admin_username }}"
     ADMIN_PASSWORD: "{{ admin_password }}"
 
-- name: pull tic docker
+- name: pull flexfactory
   become: true
   git:
     repo: https://github.com/0b11stan/FlexFactory.git
