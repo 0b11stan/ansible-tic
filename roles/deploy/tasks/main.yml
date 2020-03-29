@@ -1,57 +1,23 @@
-- name: create required docker volumes
-  become: true
-  command: "docker volume create {{ item }}"
-  args:
-    creates: "{{ docker_volumes_path }}/{{ item }}"
-  loop:
-    - nextcloud
-    - database
-
 - name: required packages are installed
   become: true
   package:
     state: present
-    name:
-      - git
+    name: git
 
 - name: pull tic docker
   become: true
   git:
     repo: https://github.com/0b11stan/docker-tic.git
     dest: /srv/docker-tic/
+    key_file: /root/.ssh/id_rsa
 
 - name: deploy apps
   become: true
   docker_compose:
     project_name: tic
     project_src: /srv/docker-tic/
-  environment:
-    DATABASE_ROOT_PASSWORD: "{{ db_root_password }}"
-    DATABASE_PASSWORD: "{{ db_password }}"
-    ADMIN_USERNAME: "{{ admin_username }}"
-    ADMIN_PASSWORD: "{{ admin_password }}"
-
-- name: pull flexfactory
-  become: true
-  git:
-    repo: https://github.com/0b11stan/FlexFactory.git
-    dest: /srv/flexfactory/
-  register: flexfactory
-
-- name: update flexfactory
-  become: true
-  docker_compose:
-    project_name: tic
-    project_src: /srv/docker-tic/
     build: true
     nocache: true
-    services: flexfactory
-    recreate: always
-  environment:
-    DATABASE_ROOT_PASSWORD: "{{ db_root_password }}"
-    DATABASE_PASSWORD: "{{ db_password }}"
-    ADMIN_USERNAME: "{{ admin_username }}"
-    ADMIN_PASSWORD: "{{ admin_password }}"
 
 # TODO : auto-configure nextcloud overwrite config !
 #   'overwritehost' => 'cloud.tic.sh',

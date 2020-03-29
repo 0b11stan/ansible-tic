@@ -9,6 +9,6 @@
       tags: common
     - role: deploy
       tags: common
-    - role: ssh
-      tags: ssh
+      #    - role: ssh
+      #      tags: ssh
 ...
