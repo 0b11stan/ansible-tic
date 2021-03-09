@@ -1,15 +1,12 @@
-INVENTORY=production
+INVENTORY=dev
 
-CMD=ansible-playbook -i $(INVENTORY).ini
-
-ssh:        ## Play the recipe for the first time
-	$(CMD) tic.yml -k -t ssh
+CMD=ansible-playbook -i inventory.$(INVENTORY).ini
 
 check:       ## Play the recipe without modifiations
-	$(CMD) tic.yml -k --check --diff -t common
+	$(CMD) tic.yml --check --diff
 
 apply:       ## Play the recipe with modifications
-	$(CMD) tic.yml -k -t common
+	$(CMD) tic.yml
 
 backup:	     ## Backup nextcloud datas
 	$(CMD) backup.yml

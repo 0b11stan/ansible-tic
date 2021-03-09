@@ -2,14 +2,11 @@
   become: true
   package:
     state: present
-    name:
-      - sudo
-      - epel-release
+    name: sudo
 
 - name: user tristan exists
   become: true
-  user:
-    name: tristan
+  user: name=tristan
 
 - name: tristan is an admin
   become: true
@@ -19,9 +16,8 @@
     create: yes
     validate: 'visudo -cf %s'
 
-- name: firewalld service is disabled
+- name: the system is up to date
   become: true
-  service:
-    name: firewalld
-    state: stopped
-    enabled: false
+  apt:
+    update_cache: true
+    upgrade: true

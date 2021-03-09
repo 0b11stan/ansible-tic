@@ -4,7 +4,7 @@
 
 As `root`:
 ```bash
-apt update && apt upgrade -y && apt install sudo
+apt update && apt upgrade -y && apt install -y sudo
 /sbin/usermod -aG sudo tristan
 ```
 
