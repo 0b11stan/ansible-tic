@@ -40,7 +40,6 @@
 
       Press ENTER when done
 
-# TODO : ssh-keyscan github.com >> ~/.ssh/known_hosts
 - name: pull tic docker
   become: true
   become_user: tic
@@ -50,10 +49,10 @@
     key_file: /home/tic/.ssh/id_rsa
     accept_hostkey: true
 
-#- name: deploy apps
-#  become: true
-#  docker_compose:
-#    project_name: tic
-#    project_src: /home/tic/docker-tic/
-#    build: true
-#    nocache: true
+- name: deploy apps
+  become: true
+  docker_compose:
+    project_name: tic
+    project_src: /home/tic/docker-tic/
+    build: true
+    nocache: true
