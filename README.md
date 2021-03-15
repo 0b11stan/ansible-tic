@@ -17,8 +17,8 @@ Then, do `make help`.
 
 ## TODO
 
-- [ ] install docker & docker-compose
-- [ ] pull docker-tic dans /home/tristan/
+- [x] install docker & docker-compose
+- [x] pull docker-tic dans /home/tristan/
 - [ ] harden ssh
 - [ ] mise en place du firewall
 - [ ] protection ddos
