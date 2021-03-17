@@ -2,52 +2,17 @@
   become: true
   package:
     name:
-      - git
-      - acl
       - make
-
-- name: a deploy user exists for this app
-  become: true
-  user:
-    name: tic
-    groups: docker
-
-- name: ssh directory exists
-  become: true
-  become_user: tic
-  file:
-    path: /home/tic/.ssh/
-    state: directory
-
-- name: deploy keys for ssh exists
-  become: true
-  become_user: tic
-  openssh_keypair: path=/home/tic/.ssh/id_rsa
-
-- name: the git file is downloaded locally
-  become: true
-  become_user: tic
-  fetch:
-    src: /home/tic/.ssh/id_rsa.pub
-    dest: /tmp/ansible-git.pub
-    flat: true
-
-- pause:
-    prompt: |-
-      Please register public key to https://github.com/0b11stan/docker-tic/settings/keys:
-      
-      {{ lookup('file', '/tmp/ansible-git.pub') }}
-
-      Press ENTER when done
+      - git
 
 - name: pull tic docker
   become: true
   become_user: tic
   git:
-    repo: git@github.com:0b11stan/docker-tic.git
+    repo: https://github.com/0b11stan/docker-tic.git
     dest: /home/tic/docker-tic/
-    key_file: /home/tic/.ssh/id_rsa
-    accept_hostkey: true
+    track_submodules: true
+    force: yes
 
 - name: deploy apps
   become: true
